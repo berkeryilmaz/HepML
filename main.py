@@ -6,7 +6,7 @@
 # Used:
 # http://bikealive.nl/owon-bin-file-format.html and
 # http://bikealive.nl/tl_files/EmbeddedSystems/Test_Measurement/owon/OWON%20Oscilloscope%20PC%20Guidance%20Manual.pdf
-#
+#bişeyler bişeyler
 
 import sys
 from struct import pack, unpack, calcsize
