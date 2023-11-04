@@ -2,6 +2,7 @@ from Oscilloscope.FileReader import FileReader
 import json
 import os
 
+
 class Oscilloscope:
     def __init__(self, file_paths=[]):
         self.file_paths = None
@@ -36,8 +37,8 @@ class Oscilloscope:
         return firstFile
 
     def setOscilloscopeParams(self, param_dict):
-        for attr in param_dict:
-            setattr(self, attr, param_dict[attr])
+        for attr, value in param_dict.items():
+            setattr(self, attr, value)
 
     @property
     def __dict__(self):
