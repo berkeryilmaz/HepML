@@ -3,9 +3,9 @@ import json
 import os
 
 class Oscilloscope:
-    def __init__(self, file_paths):
-        self.file_paths = file_paths
-        self.files = self.getRecordFiles()
+    def __init__(self, file_paths=[]):
+        self.file_paths = None
+        self.files = None
         self.timebase = None
         self.sample = None
         self.channel = None
@@ -15,7 +15,11 @@ class Oscilloscope:
         self.model = None
         self.trig = None
 
-        self.setOscilloscopeParams()
+        if (len(file_paths)):
+            self.file_paths = file_paths
+            self.files = self.getRecordFiles()
+            merged_file = self.mergeRecordFiles()
+            self.setOscilloscopeParams(merged_file.__dict__)
 
     def getRecordFiles(self):
         record_files = []
@@ -31,10 +35,9 @@ class Oscilloscope:
                 firstFile.channel[i].data += channel.data
         return firstFile
 
-    def setOscilloscopeParams(self):
-        file = self.mergeRecordFiles()
-        for attr in file.__dict__:
-            setattr(self, attr, getattr(file, attr))
+    def setOscilloscopeParams(self, param_dict):
+        for attr in param_dict:
+            setattr(self, attr, param_dict[attr])
 
     @property
     def __dict__(self):
@@ -55,3 +58,11 @@ class Oscilloscope:
         os.makedirs(os.path.dirname(filePath), exist_ok=True)
         with open(filePath, "w") as outfile:
             outfile.write(json_object)
+
+    @staticmethod
+    def loadFromJson(json_path):
+        fileObj = FileReader(json_path)
+        fileData = fileObj.readFromJson()
+        osciloscope = Oscilloscope()
+        osciloscope.setOscilloscopeParams(fileData.__dict__)
+        return osciloscope
