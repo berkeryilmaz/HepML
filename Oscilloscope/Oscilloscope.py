@@ -1,8 +1,6 @@
 from Oscilloscope.FileReader import FileReader
-from Oscilloscope.TimeBase import TimeBase
-from Oscilloscope.Sample import Sample
-from Oscilloscope.Trig import Trig
-
+import json
+import os
 
 class Oscilloscope:
     def __init__(self, file_paths):
@@ -36,4 +34,24 @@ class Oscilloscope:
     def setOscilloscopeParams(self):
         file = self.mergeRecordFiles()
         for attr in file.__dict__:
-            setattr(self, attr, getattr(file,attr))
+            setattr(self, attr, getattr(file, attr))
+
+    @property
+    def __dict__(self):
+        return {
+            'file_paths': self.file_paths,
+            'timebase': self.timebase.__dict__,
+            'sample': self.sample.__dict__,
+            'channel': [ch.__dict__ for ch in self.channel],
+            'datatype': self.datatype,
+            'runstatus': self.runstatus,
+            'idn': self.idn,
+            'model': self.model,
+            'trig': self.trig.__dict__
+        }
+
+    def saveAsJson(self, filePath):
+        json_object = json.dumps(self.__dict__)
+        os.makedirs(os.path.dirname(filePath), exist_ok=True)
+        with open(filePath, "w") as outfile:
+            outfile.write(json_object)
