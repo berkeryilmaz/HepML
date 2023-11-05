@@ -4,3 +4,19 @@ data Dizini
             Geometri + detekörü ölçüsü
                 Kaplama ölçüsü
                     Çalışma gerilim + Kaynak türü
+
+csv kolonları
+Gaz Type (P10,P20,arnco2)
+CH4 (p10 => 0.10,p20 => 0.20,arnco2 => 0.0)
+Ar  (p10 => 0.90,p20 => 0.80,arnco2 => 0.05)
+N   (p10 => 0.0,p20 => 0.00,arnco2 => 0.35)
+CO2 (p10 => 0.0,p20 => 0.00,arnco2 => 0.60)
+Geometry
+Size
+Area
+Cover Size
+Cover Area
+Voltage
+Source
+Time window
+Peak Count
