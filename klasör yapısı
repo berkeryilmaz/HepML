@@ -9,14 +9,18 @@ csv kolonları
 Gaz Type (P10,P20,arnco2)
 CH4 (p10 => 0.10,p20 => 0.20,arnco2 => 0.0)
 Ar  (p10 => 0.90,p20 => 0.80,arnco2 => 0.05)
-N   (p10 => 0.0,p20 => 0.00,arnco2 => 0.35)
-CO2 (p10 => 0.0,p20 => 0.00,arnco2 => 0.60)
+N2   (p10 => 0.0,p20 => 0.00,arnco2 => 0.35)
+CO2 (p10 => 0.0,p20 => 0.00,arnco2 => 0.6)
+C   (p10 => 0.10 * 0.2,p20 => 0.20 * 0.2,arnco2 => 0.6 * 0.33)
+O   (p10 => 0.0,p20 => 0.0,arnco2 => 0.6 * 0.67)
+H   (p10 => 0.10 * 0.8,p20 => 0.20 * 0.8,arnco2 => 0.0)
 Geometry
-Size
-Area
+Detector Size
+Detector Area
 Cover Size
 Cover Area
+Cover Area Ratio => Cover Area / Detector Area
 Voltage
 Source
-Time window
+Time Window
 Peak Count
