@@ -1,5 +1,6 @@
-Gaz Türü
-Detektör Geometrisi
-Geometri + detekörü ölçüsü
-Kaplama ölçüsü
-Çalışma gerilim + Kaynak türü
+data Dizini
+    Gaz Türü
+        Detektör Geometrisi
+            Geometri + detekörü ölçüsü
+                Kaplama ölçüsü
+                    Çalışma gerilim + Kaynak türü
