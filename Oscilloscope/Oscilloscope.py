@@ -67,3 +67,6 @@ class Oscilloscope:
         osciloscope = Oscilloscope()
         osciloscope.setOscilloscopeParams(fileData.__dict__)
         return osciloscope
+
+    def getActiveChannel(self):
+        return [channel for channel in self.channel if channel.display == 'ON']
