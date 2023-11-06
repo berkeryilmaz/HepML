@@ -30,3 +30,4 @@ for (root, dirs, file) in os.walk(path):
 df = pd.DataFrame.from_records(liste)
 df.to_csv('out.csv')
 print(df)
+
