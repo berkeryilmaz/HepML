@@ -5,24 +5,26 @@ from Oscilloscope.Oscilloscope import Oscilloscope
 
 path = "detektor data 2"
 
-# to store files in a list
+time_slice_list = [1, 3, 5, 10, 15, 25]
+
 liste = []
 walk = os.walk(path)
-# dirs=directories
 i = 1
 for (root, dirs, file) in os.walk(path):
     splitRoot = root.lower().split('/')
     if (len(splitRoot) == 6 and len([name for name in file if name.endswith('.bin')]) > 0):
-        osci = Oscilloscope([root + '/' + file_name for file_name in getOrderedFileList(root)[0:10]])
-        print(i, root)
+        osci = Oscilloscope([root + '/' + file_name for file_name in getOrderedFileList(root)])
         active_channel = osci.getActiveChannel()
-        params = createMeasureParams(splitRoot)
-        params['avg'] = sum(active_channel[0].data) / len(active_channel[0].data)
-        params['root'] = root
-        params['active_channel_count'] = len(active_channel)
-        params['Time_Window'] = len(active_channel[0].data) / 5000
-        params['Peak_Count'] = active_channel[0].countPeaks()
-        liste.append(params)
+        data_length = len(active_channel[0].data)
+        for time_slice in time_slice_list:
+            params = createMeasureParams(splitRoot)
+            params['Time_Window'] = time_slice
+            for x in range(0, 100):
+                begin, end = getRandomPart(data_length, time_slice * 5000)
+                params['Peak_Count'] = active_channel[0].countPeaks(begin, end)
+                liste.append(params)
+
+        print(i, root)
         i += 1
 
 df = pd.DataFrame.from_records(liste)

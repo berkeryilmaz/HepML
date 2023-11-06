@@ -4,9 +4,14 @@ from Oscilloscope.FileReader import FileReader
 from Oscilloscope.Oscilloscope import Oscilloscope
 
 filelist = os.listdir()
-osiloskop_info = Oscilloscope(['0.bin'])
-osiloskop1 = Oscilloscope(['detektor data 2/P20/Kare/Kare 10x10/6x6/4000V kaynaksız/5.bin'])
+#osiloskop_info = Oscilloscope(['0.bin'])
+osiloskopLocal = Oscilloscope(['data_test/local/0.bin'])
+osiloskopRemote = Oscilloscope(['data_test/remote/1.bin'])
 
+if(osiloskopLocal.getActiveChannel()[0].data == osiloskopRemote.getActiveChannel()[0].data):
+    print(True)
+else:
+    print(False)
 
 osiloskopfromjson = Oscilloscope.loadFromJson('berker/data.json')
 info = {'key' : 1234,'key2':456}

@@ -1,4 +1,5 @@
 import os
+import random
 
 
 def getGasRatio(gas_type):
@@ -45,7 +46,7 @@ def getGasRatio(gas_type):
             'H': 0.0
         }
 
-    molecules = {molecule: round(ratio,2) for molecule, ratio in molecules.items()}
+    molecules = {molecule: round(ratio, 2) for molecule, ratio in molecules.items()}
     return molecules
 
 
@@ -59,7 +60,7 @@ def createMeasureParams(folder_path):
     area_ratio = round(cover_area / detector_area, 2)
     gas_ratios = getGasRatio(gas_type)
     voltage = int(folder_path[5].replace('p10 ', '').replace('p20 ', '').split(' ')[0].replace('v', ''))
-    source = folder_path[5].replace(gas_type+' ','').split(' ')[1]
+    source = folder_path[5].replace(gas_type + ' ', '').split(' ')[1]
 
     return {
         'Gas_Type': gas_type,
@@ -87,3 +88,9 @@ def getOrderedFileList(root):
     file_list = [file for file in os.listdir(root) if file.endswith('.bin')]
     ordered_file_list = sorted(file_list, key=lambda x: int(x.split('.')[0]))
     return ordered_file_list
+
+
+def getRandomPart(data_length, length):
+    begin = random.randint(0, data_length - length)
+    end = begin + length
+    return begin, end
