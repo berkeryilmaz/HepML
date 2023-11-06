@@ -1,0 +1,25 @@
+import os
+from helper import *
+import pandas as pd
+from Oscilloscope.Oscilloscope import Oscilloscope
+
+path = "detektor data 2"
+
+# to store files in a list
+liste = []
+walk = os.walk(path)
+# dirs=directories
+for (root, dirs, file) in os.walk(path):
+    splitRoot = root.lower().split('/')
+    if (len(splitRoot) == 6 and len([name for name in file if name.endswith('.bin')]) > 0):
+        osci = Oscilloscope([root + '/' + file_name for file_name in getOrderedFileList(root)[0:5]])
+        active_channel = osci.getActiveChannel()[0]
+        params = createMeasureParams(splitRoot)
+        params['avg'] = sum(active_channel.data)/len(active_channel.data)
+        params['root'] = root
+        liste.append(params)
+        a = osci.channel[0].data
+
+df = pd.DataFrame.from_records(liste)
+df.to_csv('out.csv')
+print(df)
