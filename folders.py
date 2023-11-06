@@ -13,7 +13,7 @@ i = 1
 for (root, dirs, file) in os.walk(path):
     splitRoot = root.lower().split('/')
     if (len(splitRoot) == 6 and len([name for name in file if name.endswith('.bin')]) > 0):
-        osci = Oscilloscope([root + '/' + file_name for file_name in getOrderedFileList(root)[0:5]])
+        osci = Oscilloscope([root + '/' + file_name for file_name in getOrderedFileList(root)[0:10]])
         print(i, root)
         active_channel = osci.getActiveChannel()
         params = createMeasureParams(splitRoot)
