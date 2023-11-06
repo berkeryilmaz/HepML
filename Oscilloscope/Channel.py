@@ -2,6 +2,11 @@ import pandas as pd
 import numpy as np
 from scipy.signal import savgol_filter
 from scipy.signal import find_peaks
+import matplotlib.pyplot as plt
+from matplotlib import interactive
+import os
+
+interactive(True)
 
 
 class Channel:
@@ -34,8 +39,30 @@ class Channel:
         sorted = readData.sort_values(0)
         filtered = sorted[int(len(sorted) * 0.2):int(len(sorted) * 0.80)]
         std = np.std(filtered[0])
-        peaks, _ = find_peaks(smootedData[0], prominence=std * 3, wlen=21)
-        return peaks
+        return find_peaks(smootedData[0], prominence=std * 3, wlen=21)
 
     def countPeaks(self, start=None, finish=None):
         return len(self.findPeaks(start, finish))
+
+    def showPlot(self, title):
+        df = pd.DataFrame(self.data)
+        plt.xlabel("Time")
+        plt.ylabel("Volt")
+        plt.title(title)
+        plt.plot(df)
+        plt.show()
+
+    def savePlot(self, path, title):
+        df = pd.DataFrame(self.data)
+        peaks, _ = self.findPeaks()
+        plt.xlabel("Time")
+        plt.ylabel("Volt")
+        plt.title(title)
+
+        plt.plot(df, color="orange", linewidth=1)
+        plt.scatter(peaks, df[0][peaks], color="red", linewidth=2)
+
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+
+        plt.savefig(path)
+        plt.close()
