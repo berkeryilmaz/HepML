@@ -44,14 +44,14 @@ class Oscilloscope:
     def __dict__(self):
         return {
             'file_paths': self.file_paths,
-            'timebase': self.timebase.__dict__ if type(self.timebase) is dict else False,
-            'sample': self.sample.__dict__ if type(self.sample) is dict else False,
+            'timebase': self.timebase.__dict__,
+            'sample': self.sample.__dict__,
             'channel': [ch.__dict__ for ch in self.channel],
             'datatype': self.datatype,
             'runstatus': self.runstatus,
             'idn': self.idn,
             'model': self.model,
-            'trig': self.trig.__dict__ if type(self.trig) is dict else False
+            'trig': self.trig.__dict__
         }
 
     def saveAsJson(self, filePath):
