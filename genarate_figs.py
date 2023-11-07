@@ -15,5 +15,5 @@ for (root, dirs, file) in os.walk(path):
             osci = Oscilloscope([root + '/' + file])
             active_channel = osci.getActiveChannel()
             title = ' > '.join(splitRoot[1:]) + ' > ' + file
-            active_channel[0].showPlot(title)
+            #active_channel[0].showPlot(title)
             active_channel[0].savePlot(image_root + '/' + file.replace('.bin', '.png'),title)
