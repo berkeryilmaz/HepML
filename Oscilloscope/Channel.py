@@ -44,25 +44,25 @@ class Channel:
     def countPeaks(self, start=None, finish=None):
         return len(self.findPeaks(start, finish))
 
-    def showPlot(self, title):
-        df = pd.DataFrame(self.data)
-        plt.xlabel("Time")
-        plt.ylabel("Volt")
-        plt.title(title)
-        plt.plot(df)
-        plt.show()
+    def showPlot(self, title = ''):
+        self.setPlot(title)
+        plt.show(block=True)
 
     def savePlot(self, path, title):
+        self.setPlot(title)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        plt.savefig(path)
+        plt.close('all')
+
+    def setPlot(self, title):
         df = pd.DataFrame(self.data)
         peaks, _ = self.findPeaks()
+
+        plt.figure(figsize=(12, 6))
         plt.xlabel("Time")
         plt.ylabel("Volt")
         plt.title(title)
 
-        plt.plot(df, color="orange", linewidth=1)
-        plt.scatter(peaks, df[0][peaks], color="red", linewidth=2)
-
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-
-        plt.savefig(path)
-        plt.close()
+        plt.plot(df, color="orange", linewidth=1, label='Volt')
+        plt.scatter(peaks, df[0][peaks], color="red", linewidth=2, label=f"Peaks ({len(peaks)})")
+        plt.legend(loc="upper left")

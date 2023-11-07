@@ -9,8 +9,9 @@ for (root, dirs, file) in os.walk(path):
     splitRoot = root.lower().split('/')
     image_root = root.replace(path, 'image')
     if (len(splitRoot) == 6 and len([name for name in file if name.endswith('.bin')]) > 0):
+        print(root)
         fileList = [file_name for file_name in getOrderedFileList(root)]
-        for file in fileList:
+        for file in fileList[:10]:
             osci = Oscilloscope([root + '/' + file])
             active_channel = osci.getActiveChannel()
             title = ' > '.join(splitRoot[1:]) + ' > ' + file
