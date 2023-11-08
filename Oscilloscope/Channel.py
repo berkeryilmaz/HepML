@@ -30,39 +30,43 @@ class Channel:
             num = round(value / (self.current_rate / self.current_ratio) + 0, 5)
             self.data.append(num)
 
-    def findPeaks(self, start=None, finish=None):
-        if (start != None and finish != None):
-            readData = pd.DataFrame(self.data[start:finish])
+    def findPeaks(self, begin=None, end=None):
+        if (begin != None and end != None):
+            readData = pd.DataFrame(self.data[begin:end])
         else:
             readData = pd.DataFrame(self.data)
         smootedData = readData[[0]].apply(savgol_filter, window_length=4, polyorder=3)
         sorted = readData.sort_values(0)
         filtered = sorted[int(len(sorted) * 0.2):int(len(sorted) * 0.80)]
         std = np.std(filtered[0])
-        return find_peaks(smootedData[0], prominence=std * 3, wlen=21)
+        peaks, _ = find_peaks(smootedData[0], prominence=std * 3, wlen=21)
+        return peaks
 
-    def countPeaks(self, start=None, finish=None):
-        return len(self.findPeaks(start, finish))
+    def countPeaks(self, begin=None, end=None):
+        return len(self.findPeaks(begin, end))
 
-    def showPlot(self, title = ''):
-        self.setPlot(title)
+    def showPlot(self, title='', begin=None, end=None):
+        self.setPlot(title, begin, end)
         plt.show(block=True)
 
-    def savePlot(self, path, title):
-        self.setPlot(title)
+    def savePlot(self, path, title, begin=None, end=None):
+        self.setPlot(title, begin, end)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         plt.savefig(path)
         plt.close('all')
 
-    def setPlot(self, title):
-        df = pd.DataFrame(self.data)
-        peaks, _ = self.findPeaks()
+    def setPlot(self, title, begin=None, end=None):
+        if (begin != None and end != None):
+            readData = pd.DataFrame(self.data[begin:end])
+        else:
+            readData = pd.DataFrame(self.data)
+        peaks = self.findPeaks(begin, end)
 
         plt.figure(figsize=(12, 6))
         plt.xlabel("Time")
         plt.ylabel("Volt")
         plt.title(title)
 
-        plt.plot(df, color="orange", linewidth=1, label='Volt')
-        plt.scatter(peaks, df[0][peaks], color="red", linewidth=2, label=f"Peaks ({len(peaks)})")
+        plt.plot(readData, color="orange", linewidth=1, label='Volt')
+        plt.scatter(peaks, readData[0][peaks], color="red", linewidth=2, label=f"Peaks ({len(peaks)})")
         plt.legend(loc="upper left")

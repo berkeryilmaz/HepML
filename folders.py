@@ -23,6 +23,7 @@ for (root, dirs, file) in os.walk(path):
             begin, end = 0, duration
             while (end < data_length):
                 params['Peak_Count'] = active_channel[0].countPeaks(begin, end)
+                active_channel[0].showPlot('',begin, end)
                 liste.append(params)
                 begin, end = end, end + duration
 
