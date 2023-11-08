@@ -19,10 +19,12 @@ for (root, dirs, file) in os.walk(path):
         for time_slice in time_slice_list:
             params = createMeasureParams(splitRoot)
             params['Time_Window'] = time_slice
-            for x in range(0, 100):
-                begin, end = getRandomPart(data_length, time_slice * 5000)
+            duration = time_slice * 5000
+            begin, end = 0, duration
+            while (end < data_length):
                 params['Peak_Count'] = active_channel[0].countPeaks(begin, end)
                 liste.append(params)
+                begin, end = end, end + duration
 
         print(i, root)
         i += 1
@@ -30,4 +32,3 @@ for (root, dirs, file) in os.walk(path):
 df = pd.DataFrame.from_records(liste)
 df.to_csv('out.csv')
 print(df)
-
