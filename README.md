@@ -283,10 +283,10 @@ peaks = active_channel.findPeaks(1000,2000)
 
 Aktif kanaldaki datadaki tepe noklarının sayısını almak için: 
 ```python
-peaks = active_channel.countPeaks()
+peak_count = active_channel.countPeaks()
 ```
 
 Aktif kanaldaki datanın belirli aralıktaki tepe noklarını sayısını almak için: 
 ```python
-peaks = active_channel.countPeaks(1000,2000)
+peak_count = active_channel.countPeaks(1000,2000)
 ```
