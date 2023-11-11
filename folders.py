@@ -17,15 +17,10 @@ for (root, dirs, file) in os.walk(path):
         osci = Oscilloscope([root + '/' + file_name for file_name in getOrderedFileList(root)])
         active_channel = osci.getActiveChannel()
         data_length = len(active_channel[0].data)
-        for time_slice in time_slice_list:
-            duration = time_slice * 5000
-            begin, end = 0, duration
-            while (end < data_length):
-                params = createMeasureParams(splitRoot)
-                params['Time_Window'] = time_slice
-                params['Peak_Count'] = active_channel[0].countPeaks(begin, end)
-                liste.append(params)
-                begin, end = end, end + duration
+        params = createMeasureParams(splitRoot)
+        params['Peak_Count'] = active_channel[0].countPeaks()
+        params['Folder'] = root
+        liste.append(params)
 
         print(i, root)
         i += 1
