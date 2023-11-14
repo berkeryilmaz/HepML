@@ -27,8 +27,8 @@ class Channel:
 
     def setData(self, raw_data):
         for value in raw_data:
-            num = round(value / (self.current_rate / self.current_ratio) + 0, 5)
-            self.data.append(num)
+            num = value / (self.current_rate / self.current_ratio) - self.offset * 2 / 100
+            self.data.append(round(num, 5))
 
     def findPeaks(self, begin=None, end=None):
         if (begin != None and end != None):
@@ -39,7 +39,7 @@ class Channel:
         sorted = readData.sort_values(0)
         filtered = sorted[int(len(sorted) * 0.2):int(len(sorted) * 0.80)]
         std = np.std(filtered[0])
-        peaks, _ = find_peaks(smootedData[0], prominence=std * 3, wlen=21)
+        peaks, _ = find_peaks(smootedData[0], prominence=std * 5, wlen=21)
         return peaks
 
     def countPeaks(self, begin=None, end=None):

@@ -82,7 +82,7 @@ Belirtilen kanal bilgileriyle Channel nesnesini başlatır.
     setData(self, raw_data)
 
 ### Parametreler:
-- **raw_data** (list): İşlenecek ham veri.
+    raw_data (list): İşlenecek ham veri.
 Geçerli oran ve orantı kullanılarak ham veriyi işler ve kanalın veri özelliğini ayarlar.
 
 ## Tepe Noktalarının Tespiti
