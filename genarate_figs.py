@@ -13,9 +13,10 @@ for (root, dirs, file) in os.walk(path):
         fileList = [file_name for file_name in getOrderedFileList(root)]
         for file in fileList[:10]:
             osci = Oscilloscope([root + '/' + file])
-            active_channel = osci.getActiveChannel()
-            title = ' > '.join(splitRoot[1:]) + ' > ' + file
-            #active_channel[0].showPlot(title)
-            #active_channel[0].savePlot(image_root + '/' + file.replace('.bin', '.png'),title)
-            df = pd.DataFrame(active_channel[0].data)
-            df.to_csv(image_root + '/' + file.replace('.bin', '.csv'))
+            active_channel_list = osci.getActiveChannel()
+            for active_channel in active_channel_list:
+                title = ' > '.join(splitRoot[1:]) + ' > ' + file +f"({active_channel.name})"
+                #active_channel[0].showPlot(title)
+                active_channel.savePlot(image_root + '/' + file.replace('.bin', f"({active_channel.name}).png"),title)
+                df = pd.DataFrame(active_channel.data)
+                df.to_csv(image_root + '/' + file.replace('.bin', f"({active_channel.name}).csv"))
