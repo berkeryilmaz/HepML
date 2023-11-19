@@ -105,6 +105,10 @@ channel.countPeaks(self, begin=None, end=None)
 
 
 ## Veri Görselleştirme
+Osiloskop ekranını simule etmek için aşağıdaki fonksiyon kullanılır
+```python
+osc.showOscilloscopeScreen()
+```
 
 Kanalın verisini belirlenen tepe noktalarıyla birlikte çizim olarak görüntüler.
 ```python
@@ -230,6 +234,12 @@ Bu nesnin bilgileri data önce kaydedilen bir json dosyasından okunacaksa:
 osc = Oscilloscope.loadFromJson('dosya/yol/veri.json')
 ```
 
+Bu nesnin osiloskop ekranını simule edelim:
+```python
+osc.showOscilloscopeScreen()
+```
+
+
 Bu nesnenin herhangi bir değerini alalım. Örnek Sample:
 ```python
 sample = osc.sample
@@ -240,7 +250,7 @@ Sample'ın samplerate değerini almak istersek:
 samplerate = osc.sample.samplerate
 ```
 
-Osiloskopun kayıt sırasında aktif kanallarını çağıralım. Burası bize array dönecektir. İlk atif kanalı almak için [0] eklemelyiz.
+Osiloskopun kayıt sırasında aktif kanallarını çağıralım. Burası bize array dönecektir. İlk aktif kanalı almak için [0] eklemelyiz.
 ```python
 active_channel_list = osc.getActiveChannel()
 active_channel = active_channel_list[0]
