@@ -21,4 +21,5 @@ for (root, dirs, file) in os.walk(path):
                     title)
                 df = pd.DataFrame(active_channel.data)
                 df.to_csv(
-                    image_root + '/' + file.replace('.bin', f"({active_channel.name} - {active_channel.scale}).csv"), float_format='%.3f')
+                    image_root + '/' + file.replace('.bin', f"({active_channel.name} - {active_channel.scale}).csv"),
+                    float_format='%.3f')
