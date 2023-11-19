@@ -105,3 +105,4 @@ class Oscilloscope:
         handles, labels = plt.gca().get_legend_handles_labels()
         handles.extend(div_info)
         plt.legend(handles=handles)
+        plt.show(block=True)
