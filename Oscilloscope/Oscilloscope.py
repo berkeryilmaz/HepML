@@ -75,11 +75,12 @@ class Oscilloscope:
         return [channel for channel in self.channel if channel.display == 'ON']
 
     def showOscilloscopeScreen(self):
+        ylimit = 2000
         plt.figure(figsize=(12, 8))
-        plt.ylim(-2048, 2048)
+        plt.ylim(-ylimit, ylimit)
         plt.xlim(0, 760)
         for i in range(0, 10):
-            y = -2048 + i * 4096 / 10
+            y = -ylimit + i * 2 * ylimit / 10
             plt.axhline(y=y, color='lightgray')
 
         for i in range(0, 16):
@@ -90,8 +91,6 @@ class Oscilloscope:
         plt.axvline(x=380, color='gray')
 
         div_info = []
-        div_info.append(mpatches.Patch(color='lightgray', label=f"{self.timebase.scale} / div"))
-
         plt.tick_params(
             axis='both',  # changes apply to the x-axis
             which='both',  # both major and minor ticks are affected
@@ -100,6 +99,9 @@ class Oscilloscope:
             labelbottom=False)
         for channel in self.getActiveChannel():
             plt.plot(channel.raw_data, linewidth=1, label=channel.name)
-            div_info.append(mpatches.Patch(color='lightgray', label=f"{channel.scale} / div"))
+            div_info.append(mpatches.Patch(color='white', label=f"{channel.scale} ({channel.name})  / div"))
 
-        plt.legend(handles=div_info)
+        div_info.append(mpatches.Patch(color='lightgray', label=f"{self.timebase.scale} / div"))
+        handles, labels = plt.gca().get_legend_handles_labels()
+        handles.extend(div_info)
+        plt.legend(handles=handles)
