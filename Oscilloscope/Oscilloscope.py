@@ -2,6 +2,9 @@ from Oscilloscope.FileReader import FileReader
 import json
 import os
 
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+
 
 class Oscilloscope:
     def __init__(self, file_paths=[]):
@@ -70,3 +73,33 @@ class Oscilloscope:
 
     def getActiveChannel(self):
         return [channel for channel in self.channel if channel.display == 'ON']
+
+    def showOscilloscopeScreen(self):
+        plt.figure(figsize=(12, 8))
+        plt.ylim(-2048, 2048)
+        plt.xlim(0, 760)
+        for i in range(0, 10):
+            y = -2048 + i * 4096 / 10
+            plt.axhline(y=y, color='lightgray')
+
+        for i in range(0, 16):
+            x = 25 + i * 760 / 15
+            plt.axvline(x=round(x), color='lightgray')
+
+        plt.axhline(y=0, color='gray')
+        plt.axvline(x=380, color='gray')
+
+        div_info = []
+        div_info.append(mpatches.Patch(color='lightgray', label=f"{self.timebase.scale} / div"))
+
+        plt.tick_params(
+            axis='both',  # changes apply to the x-axis
+            which='both',  # both major and minor ticks are affected
+            bottom=False,  # ticks along the bottom edge are off
+            top=False,  # ticks along the top edge are off
+            labelbottom=False)
+        for channel in self.getActiveChannel():
+            plt.plot(channel.raw_data, linewidth=1, label=channel.name)
+            div_info.append(mpatches.Patch(color='lightgray', label=f"{channel.scale} / div"))
+
+        plt.legend(handles=div_info)

@@ -17,6 +17,7 @@ class FileReader:
 
         for i, channel in enumerate(oscilloscope_setup.channel):
             byte_data = np.frombuffer(split_data[1 + i], dtype=np.int16)
+            channel.raw_data = list(byte_data)
             channel.setData(byte_data)
         return oscilloscope_setup
 

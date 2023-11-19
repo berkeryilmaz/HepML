@@ -5,6 +5,7 @@ from scipy.signal import find_peaks
 import matplotlib.pyplot as plt
 from matplotlib import interactive
 import os
+from Oscilloscope.Helper import Helper
 
 interactive(True)
 
@@ -23,11 +24,13 @@ class Channel:
         self.offset = channel_dict['offset']
         self.frequence = channel_dict['frequence']
         self.inverse = channel_dict['inverse']
+        self.raw_data = channel_dict['raw_data'] if 'raw_data' in channel_dict else []
         self.data = channel_dict['data'] if 'data' in channel_dict else []
 
     def setData(self, raw_data):
         for value in raw_data:
-            num = value / (self.current_rate / self.current_ratio) - self.offset * 2 / 100
+            voltage_scale = Helper.parseVoltage(self.scale)
+            num = (5 * value / 2000 - self.offset * 2 / 100) * voltage_scale
             self.data.append(round(num, 5))
 
     def findPeaks(self, begin=None, end=None):
@@ -35,7 +38,7 @@ class Channel:
             readData = pd.DataFrame(self.data[begin:end])
         else:
             readData = pd.DataFrame(self.data)
-        #readData = readData[[0]].apply(savgol_filter, window_length=4, polyorder=3)
+        # readData = readData[[0]].apply(savgol_filter, window_length=4, polyorder=3)
         sorted = readData.sort_values(0)
         filtered = sorted[int(len(sorted) * 0.2):int(len(sorted) * 0.80)]
         std = np.std(filtered[0])
