@@ -1,7 +1,7 @@
 from Oscilloscope.FileReader import FileReader
 import json
 import os
-
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
@@ -79,13 +79,15 @@ class Oscilloscope:
         plt.figure(figsize=(12, 8))
         plt.ylim(-ylimit, ylimit)
         plt.xlim(0, 760)
-        for i in range(0, 10):
+        yticks = []
+        xticks = []
+        for i in range(0, 11):
             y = -ylimit + i * 2 * ylimit / 10
-            plt.axhline(y=y, color='lightgray')
+            yticks.append(y)
 
-        for i in range(0, 16):
+        for i in range(0, 15):
             x = 25 + i * 760 / 15
-            plt.axvline(x=round(x), color='lightgray')
+            xticks.append(x)
 
         plt.axhline(y=0, color='gray')
         plt.axvline(x=380, color='gray')
@@ -94,13 +96,24 @@ class Oscilloscope:
         plt.tick_params(
             axis='both',  # changes apply to the x-axis
             which='both',  # both major and minor ticks are affected
-            bottom=False,  # ticks along the bottom edge are off
-            top=False,  # ticks along the top edge are off
-            labelbottom=False)
+            bottom=True,  # ticks along the bottom edge are off
+            top=True,  # ticks along the top edge are off
+            left=True,  # ticks along the bottom edge are off
+            right=True,  # ticks along the top edge are off
+
+            labelbottom=False,
+            labelleft=False
+        )
+
+        plt.gca().set_yticks(yticks)
+
+        plt.gca().set_xticks(xticks)
+
         for channel in self.getActiveChannel():
             plt.plot(channel.raw_data, linewidth=1, label=channel.name)
             div_info.append(mpatches.Patch(color='white', label=f"{channel.scale} ({channel.name})  / div"))
 
+        plt.gca().grid(which='major', alpha=0.5)
         div_info.append(mpatches.Patch(color='lightgray', label=f"{self.timebase.scale} / div"))
         handles, labels = plt.gca().get_legend_handles_labels()
         handles.extend(div_info)
