@@ -37,6 +37,7 @@ class Oscilloscope:
         for currentFile in self.files[1:]:
             for i, channel in enumerate(currentFile.channel):
                 firstFile.channel[i].data += channel.data
+                firstFile.channel[i].raw_data += channel.raw_data
         return firstFile
 
     def setOscilloscopeParams(self, param_dict):
@@ -78,7 +79,7 @@ class Oscilloscope:
         ylimit = 2000
         plt.figure(figsize=(12, 8))
         plt.ylim(-ylimit, ylimit)
-        plt.xlim(frame * 760, (frame + 1) * 760)
+        plt.xlim(0, 760)
         yticks = []
         xticks = []
         for i in range(0, 11):
@@ -110,7 +111,7 @@ class Oscilloscope:
         plt.gca().set_xticks(xticks)
 
         for channel in self.getActiveChannel():
-            plt.plot(channel.raw_data, linewidth=1, label=channel.name)
+            plt.plot(channel.raw_data[frame * 760:(frame + 1) * 760], linewidth=1, label=channel.name)
             div_info.append(mpatches.Patch(color='white', label=f"{channel.scale} ({channel.name})  / div"))
 
         plt.gca().grid(which='major', alpha=0.5)
