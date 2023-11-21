@@ -74,11 +74,11 @@ class Oscilloscope:
     def getActiveChannel(self):
         return [channel for channel in self.channel if channel.display == 'ON']
 
-    def showOscilloscopeScreen(self):
+    def showOscilloscopeScreen(self, frame=0):
         ylimit = 2000
         plt.figure(figsize=(12, 8))
         plt.ylim(-ylimit, ylimit)
-        plt.xlim(0, 760)
+        plt.xlim(frame * 760, (frame + 1) * 760)
         yticks = []
         xticks = []
         for i in range(0, 11):
