@@ -40,7 +40,7 @@ class Channel:
             readData = pd.DataFrame(self.data)
         # readData = readData[[0]].apply(savgol_filter, window_length=4, polyorder=3)
         sorted = readData.sort_values(0)
-        filtered = sorted[int(len(sorted) * 0.2):int(len(sorted) * 0.80)]
+        filtered = sorted[int(len(sorted) * 0.1):int(len(sorted) * 0.90)]
         std = np.std(filtered[0])
         peaks, _ = find_peaks(readData[0], prominence=std * 5, wlen=21)
         return peaks
