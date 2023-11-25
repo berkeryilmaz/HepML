@@ -5,3 +5,4 @@ scikit-learn
 notebook
 seaborn
 statsmodels
+pyGRNN
