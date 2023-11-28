@@ -25,6 +25,7 @@ class FileReader:
             else:
                 channel.raw_data = [0] * oscilloscope_setup.sample.datalen
                 channel.setData(channel.raw_data)
+                channel.successful_read = False
         return oscilloscope_setup
 
     def readFromJson(self):
