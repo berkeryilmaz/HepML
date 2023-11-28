@@ -19,11 +19,15 @@ for (root, dirs, file) in os.walk(path):
         data_length = len(active_channel[0].data)
         params = createMeasureParams(splitRoot)
         params['Peak_Count'] = active_channel[0].countPeaks()
+        params['Data_Length'] = data_length
         params['Folder'] = root
+        params['Successful_Read'] = active_channel[0].successful_read
         liste.append(params)
 
         print(i, root)
         i += 1
+    if i > 20:
+        break
 
 df = pd.DataFrame.from_records(liste)
 df.to_csv('out.csv')

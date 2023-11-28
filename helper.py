@@ -53,9 +53,9 @@ def getGasRatio(gas_type):
 def createMeasureParams(folder_path):
     gas_type = folder_path[1]
     detector_shape = folder_path[2]
-    detector_size = round(float(folder_path[3].replace('kare ', '').replace(',', '.').split('x')[0]), 2)
+    detector_size = round(float(folder_path[3].replace('kare ', '').replace('disk ', '').replace(',', '.').split('x')[0]), 2)
     detector_area = round(detector_size ** 2, 2)
-    cover_size = round(float(folder_path[4].replace('kare ', '').replace(',', '.').split('x')[0]), 2)
+    cover_size = round(float(folder_path[4].replace('kare ', '').replace('disk ', '').replace(',', '.').split('x')[0]), 2)
     cover_area = round(cover_size ** 2, 2)
     area_ratio = round(cover_area / detector_area, 2)
     gas_ratios = getGasRatio(gas_type)
@@ -64,22 +64,22 @@ def createMeasureParams(folder_path):
 
     return {
         'Gas_Type': gas_type,
-        'CH4': gas_ratios['CH4'],
-        'Ar': gas_ratios['Ar'],
-        'N2': gas_ratios['N2'],
-        'CO2': gas_ratios['CO2'],
-        'C': gas_ratios['C'],
-        'O': gas_ratios['O'],
-        'H': gas_ratios['H'],
+        #'CH4': gas_ratios['CH4'],
+        #'Ar': gas_ratios['Ar'],
+        #'N2': gas_ratios['N2'],
+        #'CO2': gas_ratios['CO2'],
+        #'C': gas_ratios['C'],
+        #'O': gas_ratios['O'],
+        #'H': gas_ratios['H'],
         'Shape': detector_shape,
         'Detector_Size': detector_size,
-        'Detector_Area': detector_area,
+        #'Detector_Area': detector_area,
         'Cover_Size': cover_size,
-        'Cover_Area': cover_area,
-        'Cover_Area_Ratio': area_ratio,
+        #'Cover_Area': cover_area,
+        #'Cover_Area_Ratio': area_ratio,
         'Voltage': voltage,
         'Source': source,
-        'Time_Window': 0,
+        #'Time_Window': 0,
         'Peak_Count': 0,
     }
 
