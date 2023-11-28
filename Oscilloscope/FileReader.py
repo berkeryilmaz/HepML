@@ -22,10 +22,10 @@ class FileReader:
                 byte_data = np.frombuffer(split_data[1 + i], dtype=np.int16)
                 channel.raw_data = list(byte_data)
                 channel.setData(byte_data)
+                channel.successful_read = True
             else:
                 channel.raw_data = [0] * oscilloscope_setup.sample.datalen
                 channel.setData(channel.raw_data)
-                channel.successful_read = False
         return oscilloscope_setup
 
     def readFromJson(self):

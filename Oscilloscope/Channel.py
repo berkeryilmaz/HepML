@@ -26,7 +26,7 @@ class Channel:
         self.inverse = channel_dict['inverse']
         self.raw_data = channel_dict['raw_data'] if 'raw_data' in channel_dict else []
         self.data = channel_dict['data'] if 'data' in channel_dict else []
-        self.successful_read = True
+        self.successful_read = False
 
     def setData(self, raw_data):
         for value in raw_data:
