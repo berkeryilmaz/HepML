@@ -94,3 +94,11 @@ def getRandomPart(data_length, length):
     begin = random.randint(0, data_length - length)
     end = begin + length
     return begin, end
+
+def getFileDirs(root):
+    dir_list = []
+    for (root, dirs, file) in os.walk(root):
+        splitRoot = root.lower().split('/')
+        if (len(splitRoot) == 6 and len([name for name in file if name.endswith('.bin')]) > 0):
+            dir_list.append(root)
+    return dir_list

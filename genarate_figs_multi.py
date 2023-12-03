@@ -1,18 +1,11 @@
 import os
 from multiprocessing import Pool
+import helper
 from helper import *
 import pandas as pd
 from Oscilloscope.Oscilloscope import Oscilloscope
 
 i = 0
-def getFileDirs(root):
-    dir_list = []
-    for (root, dirs, file) in os.walk(path):
-        splitRoot = root.lower().split('/')
-        if (len(splitRoot) == 6 and len([name for name in file if name.endswith('.bin')]) > 0):
-            dir_list.append(root)
-    return dir_list
-
 def saveFigures(root):
     splitRoot = root.lower().split('/')
     image_root = root.replace("detektor data 2", 'image')
@@ -35,6 +28,6 @@ def saveFigures(root):
 if __name__ == '__main__':
     pool = Pool()
     path = "detektor data 2"
-    dir_list = getFileDirs(path)
+    dir_list = helper.getFileDirs(path)
     results = pool.map(saveFigures, dir_list)
     print(results)
