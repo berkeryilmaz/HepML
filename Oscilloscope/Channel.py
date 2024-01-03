@@ -43,7 +43,7 @@ class Channel:
         sorted = readData.sort_values(0)
         filtered = sorted[int(len(sorted) * 0.1):int(len(sorted) * 0.90)]
         std = np.std(filtered[0])
-        peaks, _ = find_peaks(readData[0], prominence=std * 5, wlen=21)
+        peaks, _ = find_peaks(readData[0], prominence=std * 3, wlen=21)
         return peaks
 
     def countPeaks(self, begin=None, end=None):
